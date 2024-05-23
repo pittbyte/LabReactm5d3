@@ -9,7 +9,7 @@ const DisplayProducts = ({ products, getTotalQuantity }) => {
   const [activeProduct, setActiveProduct] = useState(null);
 
   const handleProductClick = (product) => {
-    setActiveProduct(product);
+    setActiveProduct({ ...product, quantity: product.quantity || 0 }); // Ensure quantity is defined
     setShowModal(true);
   };
 
@@ -19,13 +19,15 @@ const DisplayProducts = ({ products, getTotalQuantity }) => {
 
   const handleAdd = () => {
     if (activeProduct) {
-      setActiveProduct({ ...activeProduct, quantity: activeProduct.quantity + 1 });
+      const updatedQuantity = (activeProduct.quantity || 0) + 1;
+      setActiveProduct({ ...activeProduct, quantity: updatedQuantity });
     }
   };
 
   const handleSubtract = () => {
-    if (activeProduct && activeProduct.quantity > 0) {
-      setActiveProduct({ ...activeProduct, quantity: activeProduct.quantity - 1 });
+    if (activeProduct && (activeProduct.quantity || 0) > 0) {
+      const updatedQuantity = activeProduct.quantity - 1;
+      setActiveProduct({ ...activeProduct, quantity: updatedQuantity });
     }
   };
 
@@ -42,7 +44,7 @@ const DisplayProducts = ({ products, getTotalQuantity }) => {
       <Products products={products} onProductClick={handleProductClick} />
       <Navbar getTotalQuantity={getTotalQuantity} />
       <ProductModal show={showModal} handleClose={handleCloseModal} product={activeProduct} />
-      {/* + & - btns*/}
+      {/* + & - btns */}
       {activeProduct && (
         <div>
           <Button variant="primary" onClick={handleAdd}>Add</Button>
