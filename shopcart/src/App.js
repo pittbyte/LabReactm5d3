@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./Navbar";
 import Home from "./Home";
 import Cart from "./Cart";
+import CheckOut from "./CheckOut";
+import OAuth from "./OAuth";
 import Lightbox from "./Modal";
 
 class ShoppingCartApp extends Component {
@@ -17,6 +19,8 @@ class ShoppingCartApp extends Component {
     isLightboxOpen: false,
     selectedProduct: null,
     layout: "list", // Default Layout
+    isAuthenticated: false, // To manage authentication state
+    user: null, // To manage user data
   };
 
   getTotalQuantity = () => {
@@ -54,12 +58,17 @@ class ShoppingCartApp extends Component {
   };
 
   handleImageClick = (product) => {
-    this.openLightbox( product);
-    
+    this.openLightbox(product);
+  };
+
+  handleLogin = (response) => {
+    if (response.accessToken || (response.name && response.email)) {
+      this.setState({ isAuthenticated: true, user: response });
+    }
   };
 
   render() {
-    const { products, isLightboxOpen, selectedProduct, layout } = this.state;
+    const { products, isLightboxOpen, selectedProduct, layout, isAuthenticated } = this.state;
 
     return (
       <Router>
@@ -81,6 +90,10 @@ class ShoppingCartApp extends Component {
           <Route
             path="/cart"
             element={<Cart products={products} layout={layout} />}
+          />
+          <Route
+            path="/checkout"
+            element={isAuthenticated ? <CheckOut /> : <OAuth onLogin={this.handleLogin} />}
           />
         </Routes>
         {isLightboxOpen && (

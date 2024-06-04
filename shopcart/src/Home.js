@@ -11,7 +11,6 @@ const Home = ({
 }) => {
   return (
     <div>
-      <h1>j</h1>
       {layout === "list" ? (
         <DisplayProducts
           products={products}
