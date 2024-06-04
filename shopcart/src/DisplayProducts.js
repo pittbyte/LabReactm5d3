@@ -1,72 +1,69 @@
-import React, { useState } from "react";
-import Products from "./Products";
-import Navbar from "./Navbar";
-import { Modal, Button } from "react-bootstrap";
-import ProductModal from "./ProductModal"; // Import ProductModal component
+import React from "react";
+import { Card, Button, Col, Row } from "react-bootstrap";
 
-const DisplayProducts = ({ products, getTotalQuantity }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [activeProduct, setActiveProduct] = useState(null);
-
-  const handleProductClick = (product) => {
-    setActiveProduct({ ...product, quantity: product.quantity || 0 }); // Ensure quantity is defined
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  const handleAdd = () => {
-    if (activeProduct) {
-      const updatedQuantity = (activeProduct.quantity || 0) + 1;
-      setActiveProduct({ ...activeProduct, quantity: updatedQuantity });
-    }
-  };
-
-  const handleSubtract = () => {
-    if (activeProduct && (activeProduct.quantity || 0) > 0) {
-      const updatedQuantity = activeProduct.quantity - 1;
-      setActiveProduct({ ...activeProduct, quantity: updatedQuantity });
-    }
-  };
-
-  const [show, setShow] = useState(false);
-  const [showImage, setShowImage] = useState({}); // Corrected variable name
-  const handleClose = () => setShow(false);
-  const handleShow = (product) => {
-    setShow(true);
-    setShowImage(product);
-  };
-
+const DisplayProducts = ({ products, onQuantityChange, handleImageClick }) => {
   return (
-    <>
-      <Products products={products} onProductClick={handleProductClick} />
-      <Navbar getTotalQuantity={getTotalQuantity} />
-      <ProductModal show={showModal} handleClose={handleCloseModal} product={activeProduct} />
-      {/* + & - btns */}
-      {activeProduct && (
-        <div>
-          <Button variant="primary" onClick={handleAdd}>Add</Button>
-          <Button variant="danger" onClick={handleSubtract}>Subtract</Button>
-          <p>Quantity: {activeProduct.quantity}</p>
-        </div>
-      )}
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{showImage.desc}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <img
-            src={showImage.image}
-            width="350"
-            alt={showImage.desc}
-            className="mx-5"
-          />
-          <p><span className="text-dark">Ratings:</span> {showImage.ratings}/5</p>
-        </Modal.Body>
-      </Modal>
-    </>
+    <div>
+      {products.map((product) => (
+        <Row key={product.id} className="mb-4">
+          <Col>
+            <Card>
+              <Card.Body className="d-flex align-items-center">
+                <div>
+                  <Card.Title className="mb-0">{product.title}</Card.Title>{" "}
+                  <div className="me-3">
+                    {" "}
+          
+                    <Card.Img
+                      variant="text"
+                      src={product.image}
+                      alt={product.title}
+                      className="img-fluid"
+                      style={{
+                        width: "200px",
+                        height: "auto",
+                        objectFit: "contain",
+                      }}
+                      onClick={() => handleImageClick(product)}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <Button
+                      variant="secondary"
+                      onClick={() => onQuantityChange(product.id, -1)}
+                    >
+                      -
+                    </Button>
+                    <span>{product.quantity}</span>
+                    <Button
+                      variant="secondary"
+                      onClick={() => onQuantityChange(product.id, 1)}
+                    >
+                      +
+                    </Button>
+                  </div>
+                  <div className="border rounded p-2 mt-2 text-center">
+                    {" "}
+                    {/* Quantity selector box */}
+                    <p className="m-0">Quantity</p>
+                    <input
+                      type="number"
+                      value={product.quantity}
+                      onChange={(e) =>
+                        onQuantityChange(product.id, parseInt(e.target.value))
+                      }
+                      style={{ width: "50px" }}
+                    />
+                  </div>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      ))}
+    </div>
   );
 };
 

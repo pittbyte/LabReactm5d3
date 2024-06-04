@@ -1,40 +1,10 @@
-import React from "react"; 
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
 
 const Products = ({ products }) => {
   return (
-    <div className="container" style={{ position: "relative" }}>
+    <div className="container">
       <div className="row">
         <div className="col">
-          <h1
-            className="bg-info text-black p-3"
-            style={{ position: "relative" }}
-          >
-            Shop{" "}
-            <span
-              style={{
-                position: "absolute",
-                left: "16px",
-                top: "-8px",
-                borderRadius: "50%",
-                width: "20px",
-                height: "20px",
-                backgroundColor: "rgba(0, 0, 0, 0.5)", // shade here
-              }}
-            >
-              <span
-                style={{
-                  position: "absolute",
-                  left: "4px",
-                  top: "2px",
-                  color: "#fff",
-                }}
-              >
-                R
-              </span>
-            </span>{" "}
-            eact
-          </h1>
           {products.map((product) => (
             <div key={product.id} className="card my-3">
               <div className="card-body">
