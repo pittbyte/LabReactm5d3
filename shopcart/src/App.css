@@ -36,13 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
 .lightbox-modal {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   max-width: 600px;
-  margin:0 auto;
+  margin: 0 auto;
 }
 
 .lightbox-content {
@@ -60,4 +61,55 @@
   position: absolute;
   bottom: 10px;
   left: 10px;
+}
+
+/* Centering sort dropdown */
+.custom-select {
+  display: inline-block;
+  width: auto;
+  margin-left: 10px;
+}
+
+/* Adjusting the sort dropdown */
+.ml-2 {
+  margin-left: 10px;
+}
+
+/* Styling quantity buttons */
+.quantity-button {
+  background-color: #6c757d;
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px;
+}
+
+.quantity-text {
+  font-size: 1rem;
+  margin: 0 10px;
+}
+
+/* Styling the number input */
+.form-control[type="number"] {
+  width: 60px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+/* Ensuring the label is centered */
+.d-block {
+  display: block;
+}
+
+/* Ensuring the quantity controls are aligned */
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -30px;
 }

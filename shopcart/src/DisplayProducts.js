@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Col, Row } from "react-bootstrap";
+import { Card, Button, Col, Row, Form } from "react-bootstrap";
 
 const DisplayProducts = ({ products, onQuantityChange, handleImageClick }) => {
   return (
@@ -8,56 +8,56 @@ const DisplayProducts = ({ products, onQuantityChange, handleImageClick }) => {
         <Row key={product.id} className="mb-4">
           <Col>
             <Card>
-              <Card.Body className="d-flex align-items-center">
-                <div>
-                  <Card.Title className="mb-0">{product.title}</Card.Title>{" "}
-                  <div className="me-3">
-                    {" "}
-          
+              <Card.Body>
+                <Row className="align-items-center">
+                  <Col md={3} className="d-flex flex-column align-items-center">
+                    <div className="text-center mb-2">
+                      <span>{product.title}</span>
+                      <span className="text-danger"> - ${product.price}</span>
+                    </div>
                     <Card.Img
-                      variant="text"
+                      variant="top"
                       src={product.image}
                       alt={product.title}
-                      className="img-fluid"
+                      className="img-fluid mb-2"
                       style={{
-                        width: "200px",
+                        width: "100px",
                         height: "auto",
-                        objectFit: "contain",
+                        objectFit: "contain"
                       }}
                       onClick={() => handleImageClick(product)}
                     />
-                  </div>
-                </div>
-                <div>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <Button
-                      variant="secondary"
-                      onClick={() => onQuantityChange(product.id, -1)}
-                    >
-                      -
-                    </Button>
-                    <span>{product.quantity}</span>
-                    <Button
-                      variant="secondary"
-                      onClick={() => onQuantityChange(product.id, 1)}
-                    >
-                      +
-                    </Button>
-                  </div>
-                  <div className="border rounded p-2 mt-2 text-center">
-                    {" "}
-                    {/* Quantity selector box */}
-                    <p className="m-0">Quantity</p>
-                    <input
-                      type="number"
-                      value={product.quantity}
-                      onChange={(e) =>
-                        onQuantityChange(product.id, parseInt(e.target.value))
-                      }
-                      style={{ width: "50px" }}
-                    />
-                  </div>
-                </div>
+                  </Col>
+                  <Col md={9} className="d-flex flex-column justify-content-center align-items-center">
+                    <div className="d-flex align-items-center quantity-control">
+                      <Button
+                        variant="secondary"
+                        onClick={() => onQuantityChange(product.id, -1)}
+                        className="quantity-button"
+                      >
+                        -
+                      </Button>
+                      <span className="quantity-text mx-2">{product.quantity}</span>
+                      <Button
+                        variant="secondary"
+                        onClick={() => onQuantityChange(product.id, 1)}
+                        className="quantity-button"
+                      >
+                        +
+                      </Button>
+                      <Form.Control
+                        type="number"
+                        value={product.quantity}
+                        onChange={(e) =>
+                          onQuantityChange(product.id, parseInt(e.target.value))
+                        }
+                        style={{ width: "60px" }}
+                        className="ml-2"
+                      />
+                      <Form.Label className="mb-0 ml-2">Quantity</Form.Label>
+                    </div>
+                  </Col>
+                </Row>
               </Card.Body>
             </Card>
           </Col>

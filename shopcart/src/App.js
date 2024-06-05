@@ -11,17 +11,22 @@ import Lightbox from "./Modal";
 class ShoppingCartApp extends Component {
   state = {
     products: [
-      { id: 0, title: "Unisex Cologne", quantity: 2, image: "/cologne.jpg" },
-      { id: 1, title: "Apple iWatch", quantity: 1, image: "/iwatch.jpg" },
-      { id: 2, title: "Unique Mug", quantity: 3, image: "/mug.jpg" },
-      { id: 3, title: "Men's Wallet", quantity: 0, image: "/wallet.jpg" },
+      { id: 0, title: "Unisex Cologne", quantity: 0, image: "/cologne.jpg", price: 35, rating: "4", value: 0 },
+      { id: 1, title: "Apple iWatch", quantity: 0, image: "/iwatch.jpg",  price: 199, rating: "3.5", value: 0 },
+      { id: 2, title: "Unique Mug", quantity: 0, image: "/mug.jpg",  price: 15, rating: "5", value: 0 },
+      { id: 3, title: "Men's Wallet", quantity: 0, image: "/wallet.jpg",  price: 48, rating: "4.5", value: 0},
     ],
     isLightboxOpen: false,
     selectedProduct: null,
     layout: "list", // Default Layout
     isAuthenticated: false, // To manage authentication state
     user: null, // To manage user data
-  };
+    sortOption: 'normal',
+  }; 
+
+  handleSortChange = (event) => {
+    this.setState({ sortOption: event.target.value });
+  }; 
 
   getTotalQuantity = () => {
     const { products } = this.state;
@@ -68,7 +73,7 @@ class ShoppingCartApp extends Component {
   };
 
   render() {
-    const { products, isLightboxOpen, selectedProduct, layout, isAuthenticated } = this.state;
+    const { products, isLightboxOpen, selectedProduct, layout, isAuthenticated, sortOption } = this.state;
 
     return (
       <Router>
@@ -84,6 +89,8 @@ class ShoppingCartApp extends Component {
                 openLightbox={this.openLightbox}
                 layout={layout}
                 handleImageClick={this.handleImageClick}
+                sortOption={sortOption}
+                handleSortChange={this.handleSortChange}
               />
             }
           />
